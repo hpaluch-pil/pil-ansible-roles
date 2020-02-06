@@ -7,6 +7,7 @@
     - mc
     - unzip
     - pinfo
+    - net-tools # gimme back ifconfig!
   when: ansible_pkg_mgr == 'apt'
 
 - name: install favourite packages - YUM

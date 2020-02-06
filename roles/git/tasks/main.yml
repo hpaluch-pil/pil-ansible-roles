@@ -1,0 +1,22 @@
+# Tasks for git role
+---
+- name: install git - APT
+  apt: name={{ item }}
+  with_items:
+    - git
+  when: ansible_pkg_mgr == 'apt'
+
+- name: install git - YUM
+  yum: name={{ item }}
+  with_items:
+    - git
+  when: ansible_pkg_mgr == 'yum'
+
+- name: install misc git scripts
+  template: src={{ item }}.j2 dest=/usr/local/bin/{{ item }}
+            owner=root group=root mode=0755
+  with_items:
+    - graph_log.sh
+    - git_remote_status.sh
+    - push_branch.sh
+

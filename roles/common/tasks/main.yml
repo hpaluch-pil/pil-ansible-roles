@@ -1,0 +1,27 @@
+# Tasks for all Debian targets
+---
+- name: install favourite packages - APT
+  apt: name={{ item }}
+  with_items:
+    - vim-nox
+    - mc
+    - unzip
+    - pinfo
+  when: ansible_pkg_mgr == 'apt'
+
+- name: install favourite packages - YUM
+  yum: name={{ item }}
+  with_items:
+    - vim-enhanced
+    - mc
+    - unzip
+    - pinfo
+  when: ansible_pkg_mgr == 'yum'
+
+- name: /opt/ansible dir
+  file: path=/opt/ansible state=directory mode=0755
+
+- name: /opt/ansible/rpms dir (yum only)
+  file: path=/opt/ansible/rpms state=directory mode=0755
+  when: ansible_pkg_mgr == 'yum'
+

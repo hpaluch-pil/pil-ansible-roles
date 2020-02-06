@@ -1,0 +1,6 @@
+# pve_tuning role defaults
+---
+
+# vm.swappiness to enforce
+pvt_swappiness: 0
+

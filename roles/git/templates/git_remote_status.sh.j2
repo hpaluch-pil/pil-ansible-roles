@@ -1,0 +1,8 @@
+#!/bin/bash
+#
+# queries git remote for pending changes to be pulled
+#
+
+set -x
+exec git fetch --dry-run
+

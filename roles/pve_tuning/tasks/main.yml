@@ -1,0 +1,33 @@
+# Tasks for pve_tuning role
+---
+- name: install packages for pve_tuning role
+  apt: name={{ item }}
+  with_items:
+    - memlockd # required to lock important executables in memory
+    - smem     # for script swap_allocations.sh
+    - jq       # required for script vms_get_ip_addresses.sh
+
+- name: install superuser pve_tuning scripts
+  copy: src={{ item }} dest=/usr/local/sbin/{{ item }}
+            owner=root group=root mode=0755
+  with_items:
+    - swap_allocations.sh
+    - vms_get_ip_addresses.sh
+
+- name: set default vm.swappiness via sysctl
+  template: src=98-pve-tuning.conf.j2 dest=/etc/sysctl.d/98-pve-tuning.conf
+            owner=root group=root mode=0644
+ 
+- name: override vm.swappiness for systemd
+  template: src=templates/pve-tuning-swappiness.conf.j2 dest=/etc/tmpfiles.d/pve-tuning-swappiness.conf
+            owner=root group=root mode=0644
+
+- name: memlockd list of PVE binaries
+  copy: src=pve-tuning.cfg dest=/etc/memlockd.d/pve-tuning.cfg
+        owner=root group=root mode=0644
+
+- name: enable services for pve_tuning role
+  service: name={{ item }} enabled=yes
+  with_items:
+   - memlockd
+

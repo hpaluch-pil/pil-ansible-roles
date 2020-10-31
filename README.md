@@ -7,7 +7,7 @@ Disclaimer: There is no warranty. Use it on your own risk!
 ## List of roles
 
 Roles are tested on [Ansible](https://docs.ansible.com/ansible/latest/user_guide/index.html)
-version `2.2.1.0`. Target OS is typically `Debian 9` or `Debian 10`.
+version `2.10.2`. Target OS is `Debian 10`.
 
 These roles are available:
 
@@ -46,5 +46,25 @@ Now  you can try (without any playbook) this command to see if ansible works:
 ansible -m setup localhost
 ```
 
-TODO: ...
+At first you need to enter SSH hosts under section `[my-hosts]` in
+file `hosts`, for example:
+```
+[my-hosts]
+ansible1
+```
+It means that it will run roles on SSH host `ansible1` (you can define real HostName and SSH private
+key in standard `~/.ssh/config` file. Example of such `~/.ssh/config`:
+```
+Host ansible1
+	HostName localhost
+	User ansible
+	IdentityFile ~/.ssh/id_rsa_ansible1
+	IdentitiesOnly yes
+```
+
+Then you can run git-role using:
+
+```bash
+ansible-playbook -i hosts -l my-hosts playbook-git.yml
+```
 

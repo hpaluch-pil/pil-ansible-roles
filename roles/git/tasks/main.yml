@@ -1,16 +1,18 @@
 # Tasks for git role
 ---
+# this shows available facts
+- name: Show facts available on the system
+  ansible.builtin.debug:
+    #msg: "Hello, world!"
+    var: ansible_facts
+
 - name: install git - APT
-  apt: name={{ item }}
-  with_items:
-    - git
-  when: ansible_pkg_mgr == 'apt'
+  apt: name=git
+  when: ansible_facts['pkg_mgr'] == 'apt'
 
 - name: install git - YUM
-  yum: name={{ item }}
-  with_items:
-    - git
-  when: ansible_pkg_mgr == 'yum'
+  yum: name=git
+  when: ansible_facts['pkg_mgr'] == 'yum'
 
 - name: install misc git scripts
   template: src={{ item }}.j2 dest=/usr/local/bin/{{ item }}

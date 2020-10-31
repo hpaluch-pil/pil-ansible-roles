@@ -1,0 +1,12 @@
+# playbook-git.yml - playbook for common role from roles/common
+# Example usage:
+#   ansible-playbook -i hosts -l my-hosts playbook-common.yml
+# it will run git role on all SSH host under section '[my-hosts]' in file 'hosts'
+---
+- name: install may favorite packages...
+  hosts: my-hosts
+  #sudo: yes # replace by 'become' in new ansible...
+  become: yes
+  roles:
+    - { role: common, tags: common } 
+

@@ -1,0 +1,12 @@
+# playbook-git.yml - playbook for git role from roles/git
+# Example usage:
+#   ansible-playbook -i hosts -l my-hosts playbook-git.yml
+# it will run git role on all SSH host under section '[my-hosts]' in file 'hosts'
+---
+- name: git package + helper scripts
+  hosts: my-hosts
+  #sudo: yes # replace by 'become' in new ansible...
+  become: yes
+  roles:
+    - { role: git, tags: git } 
+
